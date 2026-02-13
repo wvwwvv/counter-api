@@ -50,6 +50,17 @@ jobs:
         run: |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > key.pem
           chmod 600 key.pem
+          
+          scp -i key.pem -o StrictHostKeyChecking=no docker-compose.yml ubuntu@43.201.71.63:/home/ubuntu/docker-compose.yml
+
+          scp -i key.pem -o StrictHostKeyChecking=no nginx.conf ubuntu@43.201.71.63:/home/ubuntu/nginx.conf
+
           ssh -i key.pem -o StrictHostKeyChecking=no ubuntu@43.201.71.63 "
+            sudo systemctl stop nginx || true
+            sudo systemctl disable nginx || true
+
+            docker compose down || true
             docker pull ${{ secrets.DOCKER_USERNAME }}/counter-app:latest
-            docker-compose up -d"
+
+            docker compose up -d --force-recreate
+          "

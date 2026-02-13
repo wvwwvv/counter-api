@@ -5,12 +5,13 @@ services:
       - "6379:6379"
 
   app:
-    build: .
+    #build: .
+    image: kkang5430/counter-app:latest
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/counterdb
       REDIS_HOST: redis
     depends_on:
       - redis
+
   nginx:
     image: nginx:alpine
     ports:
