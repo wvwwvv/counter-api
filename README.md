@@ -24,6 +24,4 @@ docker-compose logs -f
 
 # 서비스 중지
 docker-compose down
-아키텍처
-Code
-Client → Nginx (Port 80) → App (Spring Boot) → Redis (Port 6379)
+
